@@ -7,7 +7,7 @@ Population balance analysis (PBA) is a method for reconstructing dynamics from s
 2. Prior estimates (R) of the relative rates of proliferation and loss at each sampled cell
 3. A diffusion constant (D) that reflects stochasticity in the dynamics*
 
-Under mild assumptions, there is a unique dynamical system that could have produced these data in steady-state. PBA uncovers the dynamical system by applying the law of population balance, which simply states that the flux of cells into and out of a small region of gene expression space must balance. More specifically, PBA models gene expression dynamics as a diffusion-drift process with diffusion rate (D) and inhomogenous boundary conditions (R). From the observed cell density (c; approximated by X), PBA calculates the unique potential field (V) satisfying the diffusion-drift equation:
+Under mild assumptions, there is a unique dynamical system that could have produced these data in steady-state. PBA uncovers the dynamical system by applying the law of population balance, which simply states that the flux of cells into and out of a small region of gene expression space must balance. More specifically, PBA models gene expression dynamics as a diffusion-drift process with diffusion rate (D) and inhomogenous boundary conditions (R). From the observed cell density (c; approximated by X), PBA calculates the unique potential field (V) satisfying the steady-state diffusion-drift equation:
 
 <p align="center">
 <img src="https://github.com/AllonKleinLab/PBA/blob/master/diff_drift_eq.png" width=270 />
@@ -17,7 +17,7 @@ Under mild assumptions, there is a unique dynamical system that could have produ
 Thus, the outputs of PBA are:
 
 1. A potential landscape V (encoded by the values it takes at each sampled cell)
-2. Transition probabilities between the sampled states (derived from V and D)
+2. Transition probabilities between the sampled cells (derived from V and D)
 3. If terminal fates are given: the fate probabilities of each sampled cell
 
 *_Note that multiplying R and D by a common factor changes the time-scale but nothing else, so these parameters are redundant in practice._ 
