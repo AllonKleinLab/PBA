@@ -35,12 +35,9 @@ The input data for PBA consists of a:
 
 We provide example data in `example_datasets/`. 
 
-### Run CoMEt ###
-
-We provide two pipelines for performing CoMEt:
-
-1. **Run COMEt MCMC algorithm on real data and create output website**. Use the `run_comet_simple.py` script to run the Markov chain Monte Carlo (MCMC) algorithm on the given mutation matrix. `run_comet_simple.py` outputs a [JSON](http://json.org/) file that stores the parameters of the run, a tab-separated file that lists the collections identified by CoMEt (sorted descending by sampling frequency), and a website that can be used to visualize the results.
-2. **Run CoMEt MCMC algorithm on real data, assess the significance against permuted data, and create output website**. Use the `run_comet_full.py` script to perform CoMEt with the same output as the `run_comet_simple.py` but with significant test. This pipeline computes the collections with statistical significance and identifies the consensus modules. The output of this pipeline contains a [JSON](http://json.org/) file that stores the parameters of the run, a tab-separated file that lists the collections identified by CoMEt (sorted descending by sampling frequency), and a website that can be used to visualize the results.
+### Run PBA ###
+ 
+blah blah
 
 To view the results website, download the required Javascript files (see Requirements above) and start a Python web server:
 
@@ -50,13 +47,6 @@ To view the results website, download the required Javascript files (see Require
 
   Then direct your browser to `http://localhost:8000`.
 
-### Compute weights exhaustively ###
-
-We also provide the script `run_exhaustive.py` as a simple way to compute the weight &phi;(M) for *all* gene sets *M* in a given dataset (using the same input format as above). The output of `run_exhaustive.py` is a tab-separated file that lists the weight &phi;(M) for all gene sets in the dataset (sorted ascending by &phi;(M)).
-
-## Support ##
-
-Please visit [our Google Group](https://groups.google.com/forum/#!forum/dendrix) to post questions and view discussions from other users, or contact us through [our research group's website](http://compbio.cs.brown.edu).
 
 ## Testing ##
 
@@ -69,7 +59,8 @@ The tests are successful if the last line of the text printed to the terminal is
 
 ## Reference ##
 
-[Mark D.M. Leiserson](http://maxleiserson.com)\*, [Hsin-Ta Wu](http://cs.brown.edu/~bournewu/)\*, [Fabio Vandin](http://www.imada.sdu.dk/~vandinfa/), [Benjamin J. Raphael](http://compbio.cs.brown.edu). CoMEt: A Statistical Approach to Identify Combinations of Mutually Exclusive Alterations in Cancer. In *Proceedings of the 19th Annual Conference on Research in Computational Molecular Biology (RECOMB)* 2015. [Extended abstract](http://link.springer.com/chapter/10.1007%2F978-3-319-16706-0_19#page-1) and [preprint](http://arxiv.org/abs/1503.08224).
+_(in submission)_
+
 When using `runHotNet2.py`, you may also optionally provide any or all of the parameters listed
 below. If one of these parameters is not provided, it will be set to the default value shown below.
 
