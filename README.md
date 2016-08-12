@@ -1,12 +1,14 @@
 # PBA
 Population balance analysis
-
-HotNet2
 =======================
 
-HotNet2 is an algorithm for finding significantly altered subnetworks in a large gene interaction
-network. While originally developed for use with cancer mutation data, the current release also
-supports any application in which meaningful scores can be assigned to genes in the network.
+Population balance analysis (PBA) is a method for reconstructing dynamics from static-snapshots of single-cell gene expression. The inputs to PBA are:
+
+1. blah
+2. blah
+3. blah
+
+
 
 HotNet2 vs. Classic HotNet
 ------------------------
