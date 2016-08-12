@@ -3,11 +3,11 @@ Population balance analysis
 
 Population balance analysis (PBA) is a method for reconstructing dynamics from static-snapshots of single-cell gene expression. The inputs to PBA are:
 
-1. A sample of single-cell gene expression profiles (X)
-2. A vector (R) with estimates of the relative rates of proliferation and loss at each sampled cell
-3. A scalar diffusion constant (D) that reflects the level of stochasticity in the dynamics*
+1. A sample of single-cell gene expression profiles
+2. A vector (_R_) with estimates of the relative rates of proliferation and loss at each sampled gene expression state
+3. A scalar diffusion constant (_D_) that reflects the level of stochasticity in the dynamics*
 
-Under mild assumptions, there is a unique dynamical system that could have produced these data in steady-state. PBA uncovers the dynamical system by applying the law of population balance, which simply states that the flux of cells into and out of a small region of gene expression space must balance. More specifically, PBA models gene expression dynamics as a diffusion-drift process with diffusion rate (D) and inhomogenous boundary conditions (R). From the observed cell density (c; approximated by X), PBA calculates the unique potential field (V) satisfying the steady-state diffusion-drift equation:
+Under mild assumptions, there is a unique dynamical system that could have produced these data in steady-state. PBA uncovers the dynamical system by applying the law of population balance, which simply states that the flux of cells into and out of a small region of gene expression space must balance. More specifically, PBA models gene expression dynamics as a diffusion-drift process with diffusion rate (D) and inhomogenous boundary conditions (_R_). From the observed cell density (_c_), PBA calculates the unique potential field (_V_) satisfying the steady-state diffusion-drift equation:
 
 <p align="center">
 <img src="https://github.com/AllonKleinLab/PBA/blob/master/diff_drift_eq.png" width=270 />
@@ -16,19 +16,11 @@ Under mild assumptions, there is a unique dynamical system that could have produ
 
 The final outputs of PBA are:
 
-1. A potential landscape V (encoded by the values it takes at each sampled cell)
-2. Transition probabilities between the sampled cells (derived from V and D)
-3. If terminal fates are given: the fate probabilities of each sampled cell
+1. A potential landscape _V_ (encoded by the values it takes at each sampled gene expession state)
+2. Transition probabilities between the sampled gene expession states (derived from _V_ and _D_)
+3. If terminal fates are given: the fate probabilities of each sampled gene expession state
 
 *_Note: The output of PBA does not change when if R and D are scaled by a common factor. So in practice D is redudant to R._ 
-
-## Requirements ##
-
-PBA requires the following Python modules.
-
-2. SciPy
-3. NumPy
-4. sciki-learn (optional speed-up)
 
 ## Usage ##
 
@@ -36,10 +28,10 @@ PBA requires the following Python modules.
 
 The input data for PBA consists of a:
 
-1. **Expression matrix (X)**. This *.npy file should contain a matrix of single-cell gene expression values. Rows represent cells and columns represent genes. X is used to generate a k-nearest neighbor (knn) graph adjacency matrix
-2. **Edge list (A)** [alternative to 1.]. Instead of an expression matrix (input 1.), users can upload a list of edges representing a (knn) graph over sampled cells. The file should contain an edge in the format "i,j" on each line. Users can generate, visualize and then export knn graph edge lists in our companion software _SPRING_, available as a [webserver](https://kleintools.hms.harvard.edu/tools/spring.html) or a standalone program. 
-2. **Source/sink vector (R)**. This *.npy file should contain a vector of source/sink terms representing the relative rates of proliferation and loss at each sampled cell. Note that uniformly changing R by a scalar factor f is equivalent to changing the diffusion rate (level of stochasticity) by 1/f.
-3. **Lineage-specific sink matrix (S)** [optional]. If provided, this matrix can be used to define terminal lineages and compute the fate probabilities of sampled cells. This *.npy file should contain a matrix with one column for each cell and one row for each terminal lineage. S<sub>i,j</sub> represents the flux of cells into lineage i from cell j. 
+1. **Expression matrix**. This (.npy or .csv) file should contain a matrix of single-cell gene expression values and is used to generate a k-nearest neighbor (knn) graph adjacency matrix. Rows represent cells and columns represent genes. 
+2. **Edge list** [alternative to 1.]. Instead of an expression matrix (input 1.), users can upload a list of edges representing a (knn) graph over sampled gene expession states. The file should contain an edge in the format "_i,j_" on each line. Users can generate, visualize and then export knn graph edge lists in our companion software _SPRING_, available as a [webserver](https://kleintools.hms.harvard.edu/tools/spring.html) or a [standalone program](https://github.com/AllonKleinLab/SPRING/). 
+2. **Source/sink vector**. This (.npy or .csv) file should contain a vector of source/sink terms representing the relative rates of proliferation and loss at each sampled gene expession state. Note that uniformly changing R by a scalar factor _f_ is equivalent to changing the diffusion rate (level of stochasticity) by _1/f_.
+3. **Lineage-specific sink matrix** [optional]. If provided, this matrix can be used to define terminal lineages and compute the fate probabilities of sampled gene expession state. This (.npy or .csv) file should contain a matrix with one column for each cell and one row for each terminal lineage. The _i,j_ entry represents the flux of cells into lineage _i_ from gene expression state _j_. 
 
 We provide example data in `example_datasets/`. 
 
