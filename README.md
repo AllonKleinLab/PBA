@@ -26,8 +26,6 @@ The final outputs of PBA are:
 
 ### Input ###
 
-The input data for PBA consists of a:
-
 1. **Expression matrix**. This (.npy or .csv) file should contain a matrix of single-cell gene expression values and is used to generate a k-nearest neighbor (knn) graph adjacency matrix. Rows represent cells and columns represent genes. 
 2. **Edge list** [alternative to 1.]. Instead of an expression matrix (input 1.), users can upload a list of edges representing a (knn) graph over sampled gene expession states. The file should contain an edge in the format "_i,j_" on each line. Users can generate, visualize and then export knn graph edge lists in our companion software _SPRING_, available as a [webserver](https://kleintools.hms.harvard.edu/tools/spring.html) or a [standalone program](https://github.com/AllonKleinLab/SPRING/). 
 2. **Source/sink vector**. This (.npy or .csv) file should contain a vector of source/sink terms representing the relative rates of proliferation and loss at each sampled gene expession state. Note that uniformly changing R by a scalar factor _f_ is equivalent to changing the diffusion rate (level of stochasticity) by _1/f_.
