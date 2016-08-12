@@ -39,22 +39,23 @@ PBA applies a sequence of transformations to the data (see below). Each transfor
 
 1. **Compute a knn graph from an expression matrix**. Use `compute_knn_graph.py`. This script, together with graph visualizaion tools, is also avaiable in our companion software [_SPRING_](https://github.com/AllonKleinLab/SPRING/tree/master)
 
-       Input: blah
-       Output: blah
-       Usage: blah blah
 
- Balh 
- 
-
-
-To view the results website, download the required Javascript files (see Requirements above) and start a Python web server:
-
-        cd OUTPUT_DIRECTORY # the output directory you provided to run_comet_simple.py or run_comet_full.py
-        bower install
-        python -m SimpleHTTPServer 8000
+        Input: blah
+        Output: blah
+        Usage: blah blah
 
   Then direct your browser to `http://localhost:8000`.
 
+
+
+        Input: blah
+        Output: blah
+        Usage: blah blah
+
+  Then direct your browser to `http://localhost:8000`.
+
+
+       hello
 
 ## Testing ##
 
