@@ -7,7 +7,9 @@ Population balance analysis (PBA) is a method for reconstructing dynamics from s
 2. Prior estimates (R) of the relative rates of proliferation and loss in different gene expression states
 3. A diffusion constant (D) that reflects stochasticity in the dynamics*
 
-Under mild assumptions, there is a unique dynamical system that could have produced these data in steady-state. PBA uncovers the dynamical system by applying the law of population balance, which simply states that the flux of cells into and out of a small region of gene expression space must balance.  
+Under mild assumptions, there is a unique dynamical system that could have produced these data in steady-state. PBA uncovers the dynamical system by applying the law of population balance, which simply states that the flux of cells into and out of a small region of gene expression space must balance. 
+
+\alpha
 
 *Note that multiplying R and D by a common factor changes the time-scale but nothing else, so these parameters are redundant in practice. 
 
