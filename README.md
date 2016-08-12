@@ -34,8 +34,18 @@ The final outputs of PBA are:
 We provide example data in `example_datasets/`. 
 
 ### Run PBA ###
+
+PBA applies a sequence of transformations to the data (see below). Each transformation can be run as a separate script, but relies on the output from the previous script. To execute all the steps at once, run `PBA_pipeline.py.` All argument flags listed below can be used with PBA_pipeline.py. 
+
+1. **Compute a knn graph from an expression matrix**. Use `compute_knn_graph.py`. This script, together with graph visualizaion tools, is also avaiable in our companion software [_SPRING_](https://github.com/AllonKleinLab/SPRING/tree/master)
+
+       Input: blah
+       Output: blah
+       Usage: blah blah
+
+ Balh 
  
-blah blah
+
 
 To view the results website, download the required Javascript files (see Requirements above) and start a Python web server:
 
