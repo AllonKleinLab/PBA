@@ -9,7 +9,7 @@ Population balance analysis (PBA) is a method for reconstructing dynamics from s
 
 Under mild assumptions, there is a unique dynamical system that could have produced these data in steady-state. PBA uncovers the dynamical system by applying the law of population balance, which simply states that the flux of cells into and out of a small region of gene expression space must balance. More specifically, PBA models gene expression dynamics as a diffusion-drift process with diffusion rate (D) and inhomogenous boundary conditions (R). From the observed particles (X), PBA calculates the potential field (V) whose gradient
 
-<img src="https://github.com/AllonKleinLab/PBA/blob/master/diff_drift_eq.png" width=48>
+<img src="https://github.com/AllonKleinLab/PBA/blob/master/diff_drift_eq.png" width=480>
 
 
 Thus, the outputs of PBA are:
