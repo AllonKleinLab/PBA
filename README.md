@@ -42,6 +42,7 @@ PBA applies a sequence of transformations to the data (see below). Each transfor
 
         Inputs: Expression matrix (see Input 1. above)
         Output: Edge list (a file called "edge_list.csv" saved to the same directory as the expression matrix)
+
         Usage: python compute_knn_graph.py -X <path_to_expression_matrix>   (required)
                                            -E <minimum_mean expression>     (default = 0.05; used to filter genes)
                                            -V <minimum_CV>                  (default = 2; used to filter genes)
@@ -53,6 +54,7 @@ PBA applies a sequence of transformations to the data (see below). Each transfor
 
         Inputs: Edge list (see Input 2. above)
         Output: Pseudoinverse of the graph Laplacian (a matrix called Linv.npy saved to the same directory as the edge list)
+
         Usage: python compute_Linv.py -e <path_to_edge_list>
 
 3. **Compute the potential (V)**. Use `compute_potential.py`. 
@@ -60,6 +62,7 @@ PBA applies a sequence of transformations to the data (see below). Each transfor
 
         Inputs: Source/sink vector (see Input 3. abobe) and the pseudoinverse of the graph Laplacian 
         Output: The potential (an array called V.npy saved to the same directory as the pseudoinverse Laplacian)
+
         Usage: python compute_potential.py -L <path_to_pseudoinverse_laplacian> (required)
                                            -R <path_to_sources_sinks_vector>    (required)
         
@@ -68,6 +71,7 @@ PBA applies a sequence of transformations to the data (see below). Each transfor
 
         Input: Lineage-specific sink matrix (see Input 4. above) and the potential function V
         Output: Fate probability matrix where rows are cells and columns are fates (an array called B.npy saved to the same diectory as the potential V)
+
         Usage: python compute_fate_probabilities.py -S <path_to_lineage_specific_sink_matrix> (required)
                                                     -V <path_to_potential_vector>             (required)
                                                     -e <path_to_edge_list>                    (required)
@@ -86,57 +90,3 @@ The tests are successful if the last line of the text printed to the terminal is
 
 _(in submission)_
 
-When using `runHotNet2.py`, you may also optionally provide any or all of the parameters listed
-below. If one of these parameters is not provided, it will be set to the default value shown below.
-
-        =============================================================================================================
-        | PARAMETER NAME          | DEFAULT            | DESCRIPTION                                                |
-        =============================================================================================================
-        |-r/--runname             | None               |Name of run / disease.                                      |
-        -------------------------------------------------------------------------------------------------------------
-        |-ccs/--min_cc_size       | 2                  |Minimum size connected components that should be returned.  |
-        -------------------------------------------------------------------------------------------------------------
-        |-c/--num_cores           | 1                  |Number of cores to use for running permutation tests in     |
-        |                         |                    |parallel. If -1, all available cores will be used.          |
-        -------------------------------------------------------------------------------------------------------------
-        |-dp/--delta_permutations | 100                |Number of permutations to be used for delta parameter       |
-        |                         |                    |selection.                                                  |
-        -------------------------------------------------------------------------------------------------------------
-        |-sp                      | 100                |Number of permutations to be used for statistical           |
-        |--significance_permutatio|                    |significance testing.                                       |
-        -------------------------------------------------------------------------------------------------------------
-        |-o/--output_directory    | hotnet_output      |Output directory. Files results.json, components.txt, and   |
-        |                         |                    |significance.txt will be generated in subdirectories for    |
-        |                         |                    |each delta.                                                 |
-        -------------------------------------------------------------------------------------------------------------
-
-For simple runs on classic HotNet, use the `runClassicHotNet.py` Python script.  The following
-parameters are required:
-
-        ========================================================================================
-        | PARAMETER NAME          | DESCRIPTION                                                |
-        ========================================================================================
-        |-mf/--infmat_file        |Path to .mat file containing influence matrix               |
-        ----------------------------------------------------------------------------------------
-        |-if/--infmat_index_file  |Path to tab-separated file containing an index in the first |
-        |                         |column and the name of the gene represented at that index   |
-        |                         |in the second column of each line.                          |
-        ----------------------------------------------------------------------------------------
-        |-hf/--heat_file          |Path to heat file containing gene names and scores. This    |
-        |                         |can either be a JSON file created by generateHeat.py        |
-        |                         |(described below), in which case the file name must end in  |
-        |                         |.json, or a  tab-separated file containing a gene name in   |
-        |                         |the first column and the heat score for that gene in the    |
-        |                         |second  column of each line.                                |
-        ----------------------------------------------------------------------------------------
-        |-pnp                     |Path to influence matrices for permuted networks. Include   |
-        |--permuted_networks_path |##NUM## in the path to be replaced with the iteration       |
-        |                         |number                                                      |
-        ----------------------------------------------------------------------------------------
-
-Running with only the parameters specified above will create a 'hotnet_output' directory in your
-current working directory that contains 5 subdirectories each prefixed with `delta_`. Each of these
-subdirectories contains results files for a different value of the delta parameter used by the
-classic HotNet algorithm.  The contents of the directories are identical to those described above
-for simple runs of HotNet2 algorithm using `runHotNet2.py`. Similarily, the `runClassicHotNet.py`
-script accepts the same optional parameters as the `runHotNet2.py` script.
