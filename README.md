@@ -27,9 +27,9 @@ The final outputs of PBA are:
 ### Input ###
 
 1. **Expression matrix**. This (.npy or .csv) file should contain a matrix of single-cell gene expression values and is used to generate a k-nearest neighbor (knn) graph adjacency matrix. Rows represent cells and columns represent genes. 
-2. **Edge list** [alternative to 1.]. Instead of an expression matrix (input 1.), users can upload a list of edges representing a (knn) graph over sampled gene expession states. The file should contain an edge in the format "_i,j_" on each line. Users can generate, visualize and then export knn graph edge lists in our companion software _SPRING_, available as a [webserver](https://kleintools.hms.harvard.edu/tools/spring.html) or a [standalone program](https://github.com/AllonKleinLab/SPRING/). 
+2. **Edge list** [alternative to 1.]. Instead of an expression matrix (input 1.), users can upload a list of edges representing a (knn) graph over sampled gene expession states. The file should contain an edge in the format "_i,j_" on each line (0-based numbering). Users can generate, visualize and then export knn graph edge lists in our companion software _SPRING_, available as a [webserver](https://kleintools.hms.harvard.edu/tools/spring.html) or a [standalone program](https://github.com/AllonKleinLab/SPRING/). 
 3. **Source/sink vector**. This (.npy or .csv) file should contain a vector of source/sink terms representing the relative rates of proliferation and loss at each sampled gene expession state. Note that uniformly changing R by a scalar factor _f_ is equivalent to changing the diffusion rate (level of stochasticity) by _1/f_.
-4. **Lineage-specific sink matrix** [optional]. If provided, this matrix can be used to define terminal lineages and compute the fate probabilities of sampled gene expession state. This (.npy or .csv) file should contain a matrix with one column for each cell and one row for each terminal lineage. The _i,j_ entry represents the flux of cells into lineage _i_ from gene expression state _j_. 
+4. **Lineage-specific sink matrix** [optional]. If provided, this matrix can be used to define terminal lineages and compute the fate probabilities of sampled gene expession state. This (.npy or .csv) file should contain a matrix with one column for each lineage and one row for each cell. The _i,j_ entry represents the flux of cells from gene expression state _i_ into lineage _j_. 
 
 We provide example data in `example_datasets/`. 
 
@@ -40,27 +40,37 @@ PBA applies a sequence of transformations to the data (see below). Each transfor
 1. **Compute a knn graph from an expression matrix**. Use `compute_knn_graph.py`. This script, together with graph visualizaion tools, is also avaiable in our companion software [_SPRING_](https://github.com/AllonKleinLab/SPRING/tree/master)
 
 
-        Input: Expression matrix (see Input 1. above)
-        Output: Edge list (see Input 2. above)
-        Usage: python compute_knn_graph.py -X <path_to_expression_matrix>
+        Inputs: Expression matrix (see Input 1. above)
+        Output: Edge list (a file called "edge_list.csv" saved to the same directory as the expression matrix)
+        Usage: python compute_knn_graph.py -X <path_to_expression_matrix>   (required)
                                            -E <minimum_mean expression>     (default = 0.05; used to filter genes)
                                            -V <minimum_CV>                  (default = 2; used to filter genes)
                                            -p <PCA dimension>               (default = 50; used to compute distance matrix)
                                            -k <number of nearest neighbors> (default = 10; used to compute edge list)
 
-2. **Compute the Laplacian pseudo-inverse**. Use `compute_Linv.py`. 
+2. **Compute the pseudo-inverse Laplacian**. Use `compute_Linv.py`. 
 
 
-        Input: Edge list (see Input 2. above)
+        Inputs: Edge list (see Input 2. above)
         Output: Pseudoinverse of the graph Laplacian (a matrix called Linv.npy saved to the same directory as the edge list)
         Usage: python compute_Linv.py -e <path_to_edge_list>
 
-3. **Compute the Laplacian pseudo-inverse**. Use `compute_Linv.py`. 
+3. **Compute the potential (V)**. Use `compute_potential.py`. 
 
 
-        Input: Edge list (see Input 2. above)
-        Output: Pseudoinverse of the graph Laplacian (a matrix called Linv.npy saved to the same directory as the edge list)
-        Usage: python compute_Linv.py -e <path_to_edge_list>
+        Inputs: Source/sink vector (see Input 3. abobe) and the pseudoinverse of the graph Laplacian 
+        Output: The potential (an array called V.npy saved to the same directory as the pseudoinverse Laplacian)
+        Usage: python compute_potential.py -L <path_to_pseudoinverse_laplacian> (required)
+                                           -R <path_to_sources_sinks_vector>    (required)
+        
+4. **Compute fate probabilities**. Use `compute_fate_probabilities.py`. 
+
+
+        Input: Lineage-specific sink matrix (see Input 4. above) and the potential function V
+        Output: Fate probability matrix where rows are cells and columns are fates (an array called B.npy saved to the same diectory as the potential V)
+        Usage: python compute_fate_probabilities.py -S <path_to_lineage_specific_sink_matrix> (required)
+                                                    -V <path_to_potential_vector>             (required)
+                                                    -e <path_to_edge_list>                    (required)
 
 
 ## Testing ##
