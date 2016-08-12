@@ -3,11 +3,11 @@ Population balance analysis
 
 Population balance analysis (PBA) is a method for reconstructing dynamics from static-snapshots of single-cell gene expression. The inputs to PBA are:
 
-1. A set of single-cell gene expression profiles (X)
-2. Prior estimates (R) of the relative rates of proliferation and loss in different gene expression states
+1. A sample of single-cell gene expression profiles (X)
+2. Prior estimates (R) of the relative rates of proliferation and loss at each sampled cell
 3. A diffusion constant (D) that reflects stochasticity in the dynamics*
 
-Under mild assumptions, there is a unique dynamical system that could have produced these data in steady-state. PBA uncovers the dynamical system by applying the law of population balance, which simply states that the flux of cells into and out of a small region of gene expression space must balance. More specifically, PBA models gene expression dynamics as a diffusion-drift process with diffusion rate (D) and inhomogenous boundary conditions (R). From the observed particles (X), PBA calculates the potential field (V) whose gradient
+Under mild assumptions, there is a unique dynamical system that could have produced these data in steady-state. PBA uncovers the dynamical system by applying the law of population balance, which simply states that the flux of cells into and out of a small region of gene expression space must balance. More specifically, PBA models gene expression dynamics as a diffusion-drift process with diffusion rate (D) and inhomogenous boundary conditions (R). From the observed cell density (c; approximated by X), PBA calculates the unique potential field (V) satisfying the diffusion-drift equation:
 
 <p align="center">
 <img src="https://github.com/AllonKleinLab/PBA/blob/master/diff_drift_eq.png" width=270 />
@@ -16,7 +16,9 @@ Under mild assumptions, there is a unique dynamical system that could have produ
 
 Thus, the outputs of PBA are:
 
-1. A potential landscape V which describes a dynamic system 
+1. A potential landscape V (encoded by the values it takes at each sampled cell)
+2. Transition probabilities between the sampled states (derived from V and D)
+3. If terminal fates are given: the fate probabilities of each sampled cell
 
 *_Note that multiplying R and D by a common factor changes the time-scale but nothing else, so these parameters are redundant in practice._ 
 
