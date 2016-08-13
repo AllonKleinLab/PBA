@@ -111,7 +111,8 @@ We include the data from (ref 1) as example datasets. There are two examples:
  
 To visualize the results, run `python view_testing_results.py`
 
-## Reference ##
+## References ##
 
-_(in submission)_
+[Ref 1] _(in submission)_
+[Ref 2] _(in submission)_
 
