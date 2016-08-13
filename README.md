@@ -45,14 +45,14 @@ PBA applies a sequence of calculations (see below). Each one can be run as a sep
                 The potential (an array called V.npy saved to the same directory as the edge list or expression matrix)
                 If lineage specific fates were inputted: a fate probability matrix where rows are cells and columns are fates (an array called B.npy saved to the same diectory as the edge list or expression matrix)
 
-        Usage: PBA_pipeline.py -X <path_to_expression_matrix>            (required if no edge list is supplied)
-                               -E <minimum_mean expression>              (default = 0.05; used to filter genes for knn graph)
-                               -V <minimum_CV>                           (default = 2; used to filter genes for knn graph)
-                               -p <PCA dimension>                        (default = 50; used to compute distance matrix for knn graph)
-                               -k <number of nearest neighbors>          (default = 10; used to compute edge list for knn graph)
-                               -e <path_to_edge_list>                    (required if no expression matrix is supplied)
-                               -R <path_to_sources_sinks_vector>         (required)
-                               -S <path_to_lineage_specific_sink_matrix> (optional, needed to compute fate probabilities)
+        Usage: python PBA_pipeline.py -X <path_to_expression_matrix>            (required if no edge list is supplied)
+                                      -E <minimum_mean expression>              (default = 0.05; used to filter genes for knn graph)
+                                      -V <minimum_CV>                           (default = 2; used to filter genes for knn graph)
+                                      -p <PCA dimension>                        (default = 50; used to compute distance matrix for knn graph)
+                                      -k <number of nearest neighbors>          (default = 10; used to compute edge list for knn graph)
+                                      -e <path_to_edge_list>                    (required if no expression matrix is supplied)
+                                      -R <path_to_sources_sinks_vector>         (required)
+                                      -S <path_to_lineage_specific_sink_matrix> (optional, needed to compute fate probabilities)
 
 
 Alternaively, it is possible to run each step separately, as follows: 
