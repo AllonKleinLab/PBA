@@ -37,10 +37,15 @@ We provide example data in `example_datasets/`.
 
 PBA applies a sequence of calculations (see below). Each one can be run as a separate script, but relies on the output from the previous script. To execute all the steps at once, run `PBA_pipeline.py` as follows: 
 
-        Inputs: Expression matrix (Input 1. above) or edge list (Input 2. above), a gobal source/sink vector (Input 3. above) and optionally a lineage specific sink matrix (Input 4. above)
+        Inputs: Expression matrix (Input 1. above) or edge list (Input 2. above), 
+                a gobal source/sink vector (Input 3. above) 
+                and optionally a lineage specific sink matrix (Input 4. above)
         Output: If no edge list was inputted: an edge list (a file called "edge_list.csv" saved to the same directory as the expression matrix)
+        
         The pseudoinverse of the knn graph Laplacian (a matrix called Linv.npy saved to the same directory as the edge list or expression matrix)
+        
         The potential (an array called V.npy saved to the same directory as the edge list or expression matrix)
+        
         If lineage specific fates were inputted: a fate probability matrix where rows are cells and columns are fates (an array called B.npy saved to the same diectory as the edge list or expression matrix)
 
         Usage: python compute_knn_graph.py -X <path_to_expression_matrix>            (required if no edge list is supplied)
