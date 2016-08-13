@@ -111,6 +111,10 @@ We include the data from (ref 1) as example datasets. There are two examples:
  
 To visualize the results, run `python view_testing_results.py`
 
+## Support ##
+
+If have any suggestions, need technical support or want advice on parameter choices, please contact calebsw@gmail.com. 
+
 ## References ##
 
 Ref 1 (in submission)
