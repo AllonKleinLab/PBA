@@ -113,6 +113,7 @@ To visualize the results, run `python view_testing_results.py`
 
 ## References ##
 
-Ref 1 (in submission) \\
+Ref 1 (in submission)
+
 Ref 2 (in submission)
 
