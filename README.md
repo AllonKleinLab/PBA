@@ -24,7 +24,7 @@ The final outputs of PBA are:
 
 ## Usage ##
 
-### Input ###
+### Inputs ###
 
 1. **Expression matrix**. This (.npy or .csv) file should contain a matrix of single-cell gene expression values and is used to generate a k-nearest neighbor (knn) graph adjacency matrix. Rows represent cells and columns represent genes. 
 2. **Edge list** [alternative to 1.]. Instead of an expression matrix (input 1.), users can upload a list of edges representing a (knn) graph over sampled gene expession states. The file should contain an edge in the format "_i,j_" on each line (0-based numbering). Users can generate, visualize and then export knn graph edge lists in our companion software _SPRING_, available as a [webserver](https://kleintools.hms.harvard.edu/tools/spring.html) or a [standalone program](https://github.com/AllonKleinLab/SPRING/). 
@@ -69,12 +69,12 @@ PBA applies a sequence of transformations to the data (see below). Each transfor
 4. **Compute fate probabilities**. Use `compute_fate_probabilities.py`. 
 
 
-        Input: Lineage-specific sink matrix (see Input 4. above) and the potential function V
+        Inputs: Lineage-specific sink matrix (see Input 4. above), the potential function V and a knn graph edge list (see Input 2. above)
         Output: Fate probability matrix where rows are cells and columns are fates (an array called B.npy saved to the same diectory as the potential V)
 
         Usage: python compute_fate_probabilities.py -S <path_to_lineage_specific_sink_matrix> (required)
-                                                    -V <path_to_potential_vector>             (required)
-                                                    -e <path_to_edge_list>                    (required)
+                                                    -V <path_to_potential_vector>             (default: "V.npy" in same directory as S)
+                                                    -e <path_to_edge_list>                    (default: "edge_list.csv" in same directory as S)
 
 
 ## Testing ##
