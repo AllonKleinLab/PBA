@@ -31,7 +31,7 @@ The final outputs of PBA are:
 3. **Source/sink vector**. This (.npy or .csv) file should contain a vector of source/sink terms representing the relative rates of proliferation and loss at each sampled gene expession state. Note that uniformly changing R by a scalar factor _f_ is equivalent to changing the diffusion rate (level of stochasticity) by _1/f_.
 4. **Lineage-specific sink matrix** [optional]. If provided, this matrix can be used to define terminal lineages and compute the fate probabilities of sampled gene expession state. This (.npy or .csv) file should contain a matrix with one column for each lineage and one row for each cell. The _i,j_ entry represents the flux of cells from gene expression state _i_ into lineage _j_. 
 
-We provide example datasets from (ref 2) in `example_datasets/`. 
+We provide example datasets from (ref 1) in `example_datasets/`. 
 
 ### Run PBA ###
 
@@ -99,13 +99,12 @@ Alternatively, it is possible to run each step separately, as follows:
 
 ## Testing ##
 
-We include the data from (ref 2) as example datasets. There are two examples:
+We include the data from (ref 1) as example datasets. There are two examples:
 
-1. To reproduce the PBA results used for Figure 1 of (ref 2), run the following command
-
+1. To reproduce the PBA results used for Figure 1 of (ref 1), run the following command
     `blah blah`
 
-1. To reproduce the PBA results used for Figures 2-4 of (ref 2), run the following command
+1. To reproduce the PBA results used for Figures 2-4 of (ref 1), run the following command
 
  `blah blah`
 
