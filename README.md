@@ -1,7 +1,7 @@
 Population balance analysis
 =======================
 
-Population balance analysis (PBA) is a method for reconstructing dynamics from static-snapshots of single-cell gene expression. The basic inputs to PBA are:
+Population balance analysis (PBA) is a method for reconstructing dynamics from static-snapshots of single-cell gene expression (ref 1). The basic inputs to PBA are:
 
 1. A sample of single-cell gene expression profiles
 2. A vector (_R_) with estimates of the relative rates of proliferation and loss at each sampled gene expression state
@@ -27,11 +27,11 @@ The final outputs of PBA are:
 ### Inputs ###
 
 1. **Expression matrix**. This (.npy or .csv) file should contain a matrix of single-cell gene expression values and is used to generate a k-nearest neighbor (knn) graph adjacency matrix. Rows represent cells and columns represent genes. 
-2. **Edge list** [alternative to 1.]. Instead of an expression matrix (input 1.), users can upload a list of edges representing a (knn) graph over sampled gene expession states. The file should contain an edge in the format "_i,j_" on each line (0-based numbering). Users can generate, visualize and then export knn graph edge lists in our companion software _SPRING_, available as a [webserver](https://kleintools.hms.harvard.edu/tools/spring.html) or a [standalone program](https://github.com/AllonKleinLab/SPRING/). 
+2. **Edge list** [alternative to 1.]. Instead of an expression matrix (input 1.), users can upload a list of edges representing a (knn) graph over sampled gene expession states. The file should contain an edge in the format "_i,j_" on each line (0-based numbering). Users can generate, visualize and then export knn graph edge lists in our companion software _SPRING_ (ref 2), available as a [webserver](https://kleintools.hms.harvard.edu/tools/spring.html) or a [standalone program](https://github.com/AllonKleinLab/SPRING/). 
 3. **Source/sink vector**. This (.npy or .csv) file should contain a vector of source/sink terms representing the relative rates of proliferation and loss at each sampled gene expession state. Note that uniformly changing R by a scalar factor _f_ is equivalent to changing the diffusion rate (level of stochasticity) by _1/f_.
 4. **Lineage-specific sink matrix** [optional]. If provided, this matrix can be used to define terminal lineages and compute the fate probabilities of sampled gene expession state. This (.npy or .csv) file should contain a matrix with one column for each lineage and one row for each cell. The _i,j_ entry represents the flux of cells from gene expression state _i_ into lineage _j_. 
 
-We provide example data in `example_datasets/`. 
+We provide example datasets from (ref 2) in `example_datasets/`. 
 
 ### Run PBA ###
 
@@ -57,7 +57,7 @@ PBA applies a sequence of calculations (see below). Each one can be run as a sep
 
 Alternatively, it is possible to run each step separately, as follows: 
 
-1. **Compute a knn graph from an expression matrix**. Use `compute_knn_graph.py`. This script, together with graph visualizaion tools, is also available in our companion software [_SPRING_](https://github.com/AllonKleinLab/SPRING/tree/master)
+1. **Compute a knn graph from an expression matrix**. Use `compute_knn_graph.py`. This script, together with graph visualizaion tools, is also available in our companion software [_SPRING_ (ref 2)](https://github.com/AllonKleinLab/SPRING/tree/master)
 
 
         Inputs: Expression matrix (see Input 1. above)
@@ -99,12 +99,15 @@ Alternatively, it is possible to run each step separately, as follows:
 
 ## Testing ##
 
-To test CoMEt, run the following commands:
+We include the data from (ref 2) as example datasets. There are two examples:
 
-    cd test
-    python test.py
+1. To reproduce the PBA results used for Figure 1 of (ref 2), run the following command
 
-The tests are successful if the last line of the text printed to the terminal is `"PASS"`.
+    `blah blah`
+
+1. To reproduce the PBA results used for Figures 2-4 of (ref 2), run the following command
+
+ `blah blah`
 
 ## Reference ##
 
