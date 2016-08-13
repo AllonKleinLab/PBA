@@ -102,7 +102,8 @@ Alternatively, it is possible to run each step separately, as follows:
 We include the data from (ref 1) as example datasets. There are two examples:
 
 1. To reproduce the PBA results used for Figure 1 of (ref 1), run the following command
-    `blah blah`
+ 
+   `blah blah`
 
 1. To reproduce the PBA results used for Figures 2-4 of (ref 1), run the following command
 
