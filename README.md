@@ -105,9 +105,11 @@ We include the data from (ref 1) as example datasets. There are two examples:
  
    `blah blah`
 
-1. To reproduce the PBA results used for Figures 2-4 of (ref 1), run the following command
+2. To reproduce the PBA results used for Figures 2-4 of (ref 1), run the following command
 
  `blah blah`
+ 
+To visualize the results, run `python view_testing_results.py`
 
 ## Reference ##
 
