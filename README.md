@@ -1,7 +1,7 @@
 Population balance analysis
 =======================
 
-Population balance analysis (PBA) is a method for reconstructing dynamics from static-snapshots of single-cell gene expression. The inputs to PBA are:
+Population balance analysis (PBA) is a method for reconstructing dynamics from static-snapshots of single-cell gene expression. The basic inputs to PBA are:
 
 1. A sample of single-cell gene expression profiles
 2. A vector (_R_) with estimates of the relative rates of proliferation and loss at each sampled gene expression state
@@ -55,9 +55,9 @@ PBA applies a sequence of calculations (see below). Each one can be run as a sep
                                       -S <path_to_lineage_specific_sink_matrix> (optional, needed to compute fate probabilities)
 
 
-Alternaively, it is possible to run each step separately, as follows: 
+Alternatively, it is possible to run each step separately, as follows: 
 
-1. **Compute a knn graph from an expression matrix**. Use `compute_knn_graph.py`. This script, together with graph visualizaion tools, is also avaiable in our companion software [_SPRING_](https://github.com/AllonKleinLab/SPRING/tree/master)
+1. **Compute a knn graph from an expression matrix**. Use `compute_knn_graph.py`. This script, together with graph visualizaion tools, is also available in our companion software [_SPRING_](https://github.com/AllonKleinLab/SPRING/tree/master)
 
 
         Inputs: Expression matrix (see Input 1. above)
