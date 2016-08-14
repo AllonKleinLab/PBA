@@ -80,7 +80,7 @@ Alternatively, it is possible to run each step separately, as follows:
 
 ## Testing ##
 
-We include the data from (ref 1) as example datasets. There are two examples:
+The example_datasets contain
 
 1. To reproduce the PBA results used for Figure 1 of (ref 1), run the following command
  
