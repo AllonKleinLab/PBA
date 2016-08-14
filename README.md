@@ -4,7 +4,7 @@ Population balance analysis
 Population balance analysis (PBA) is a method for reconstructing dynamics from static-snapshots of single-cell gene expression (ref 1). 
 # (
 The basic inputs to PBA are:
-
+)
 1. A sample of single-cell gene expression profiles
 2. A vector (_R_) with estimates of the relative rates of proliferation and loss at each sampled gene expression state
 3. A scalar diffusion constant (_D_) that reflects the level of stochasticity in the dynamics*
