@@ -16,7 +16,7 @@ We provide example datasets from (ref 1) in `example_datasets/`.
 
 ### Run PBA ###
 
-PBA applies a sequence of calculations (see below). Each one can be run as a separate script, but relies on the output from the previous script. To execute all the steps at once, run `PBA_pipeline.py` as follows: 
+PBA applies a sequence of calculations (see below). Each one can be run as a separate script, which relies on the output from the previous script. To execute all the steps at once, run `PBA_pipeline.py` as follows: 
 
         Inputs: Expression matrix (Input 1. above) or edge list (Input 2. above), 
                 A gobal source/sink vector (Input 3. above) 
