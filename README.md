@@ -94,7 +94,7 @@ To visualize the results, run `python view_testing_results.py`
 
 ## Support ##
 
-If have any suggestions, need technical support or want advice on parameter choices, please contact calebsw@gmail.com. 
+Contact calebsw@gmail.com
 
 ## References ##
 
