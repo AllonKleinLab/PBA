@@ -64,8 +64,8 @@ Alternatively, it is possible to run each step separately, as follows:
         Inputs: Source/sink vector (see Input 3. abobe) and the pseudoinverse of the graph Laplacian 
         Output: The potential (an array called V.npy saved to the same directory as the pseudoinverse Laplacian)
 
-        Usage: python compute_potential.py -L <path_to_pseudoinverse_laplacian> (required; .npy)
-                                           -R <path_to_sources_sinks_vector>    (required; .npy or .csv)
+        Usage: python compute_potential.py  -R <path_to_sources_sinks_vector>    (required; .npy .csv)
+                                            -L <path_to_pseudoinverse_laplacian> (default: "Linv.npy" in the same directory as R; .npy)
         
 4. **Compute fate probabilities**. Use `compute_fate_probabilities.py`. 
 
