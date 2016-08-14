@@ -26,14 +26,14 @@ PBA applies a sequence of calculations (see below). Each one can be run as a sep
                 The potential (an array called V.npy saved to the same directory as the edge list or expression matrix)
                 If lineage specific fates were inputted: a fate probability matrix where rows are cells and columns are fates (an array called B.npy saved to the same diectory as the edge list or expression matrix)
 
-        Usage: python PBA_pipeline.py -X <path_to_expression_matrix>            (required if no edge list is supplied)
+        Usage: python PBA_pipeline.py -X <path_to_expression_matrix>            (required if no edge list is supplied; .csv or .npy)
                                       -E <minimum_mean expression>              (default = 0.05; used to filter genes for knn graph)
                                       -V <minimum_CV>                           (default = 2; used to filter genes for knn graph)
                                       -p <PCA dimension>                        (default = 50; used to compute distance matrix for knn graph)
                                       -k <number of nearest neighbors>          (default = 10; used to compute edge list for knn graph)
                                       -e <path_to_edge_list>                    (required if no expression matrix is supplied)
-                                      -R <path_to_sources_sinks_vector>         (required)
-                                      -S <path_to_lineage_specific_sink_matrix> (optional, needed to compute fate probabilities)
+                                      -R <path_to_sources_sinks_vector>         (required; .npy or .csv)
+                                      -S <path_to_lineage_specific_sink_matrix> (optional, needed to compute fate probabilities; .csv or .npy)
 
 
 Alternatively, it is possible to run each step separately, as follows: 
@@ -44,7 +44,7 @@ Alternatively, it is possible to run each step separately, as follows:
         Inputs: Expression matrix (see Input 1. above)
         Output: Edge list (a file called "edge_list.csv" saved to the same directory as the expression matrix)
 
-        Usage: python compute_knn_graph.py -X <path_to_expression_matrix>   (required)
+        Usage: python compute_knn_graph.py -X <path_to_expression_matrix>   (required; .csv or .npy)
                                            -E <minimum_mean expression>     (default = 0.05; used to filter genes)
                                            -V <minimum_CV>                  (default = 2; used to filter genes)
                                            -p <PCA dimension>               (default = 50; used to compute distance matrix)
@@ -56,7 +56,7 @@ Alternatively, it is possible to run each step separately, as follows:
         Inputs: Edge list (see Input 2. above)
         Output: Pseudoinverse of the graph Laplacian (a matrix called Linv.npy saved to the same directory as the edge list)
 
-        Usage: python compute_Linv.py -e <path_to_edge_list>
+        Usage: python compute_Linv.py -e <path_to_edge_list> (required)
 
 3. **Compute the potential (V)**. Use `compute_potential.py`. 
 
@@ -64,8 +64,8 @@ Alternatively, it is possible to run each step separately, as follows:
         Inputs: Source/sink vector (see Input 3. abobe) and the pseudoinverse of the graph Laplacian 
         Output: The potential (an array called V.npy saved to the same directory as the pseudoinverse Laplacian)
 
-        Usage: python compute_potential.py -L <path_to_pseudoinverse_laplacian> (required)
-                                           -R <path_to_sources_sinks_vector>    (required)
+        Usage: python compute_potential.py -L <path_to_pseudoinverse_laplacian> (required; .npy)
+                                           -R <path_to_sources_sinks_vector>    (required; .npy or .csv)
         
 4. **Compute fate probabilities**. Use `compute_fate_probabilities.py`. 
 
@@ -73,8 +73,8 @@ Alternatively, it is possible to run each step separately, as follows:
         Inputs: Lineage-specific sink matrix (see Input 4. above), the potential function V and a knn graph edge list (see Input 2. above)
         Output: Fate probability matrix where rows are cells and columns are fates (an array called B.npy saved to the same diectory as the potential V)
 
-        Usage: python compute_fate_probabilities.py -S <path_to_lineage_specific_sink_matrix> (required)
-                                                    -V <path_to_potential_vector>             (default: "V.npy" in same directory as S)
+        Usage: python compute_fate_probabilities.py -S <path_to_lineage_specific_sink_matrix> (required; .csv or .npy)
+                                                    -V <path_to_potential_vector>             (default: "V.npy" in same directory as S; .npy or .csv)
                                                     -e <path_to_edge_list>                    (default: "edge_list.csv" in same directory as S)
 
 
