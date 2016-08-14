@@ -1,21 +1,21 @@
 Population balance analysis
 =======================
 
-Population balance analysis (PBA) is a method for reconstructing dynamics from static-snapshots of single-cell gene expression (ref 1). The basic inputs to PBA are:
+Population balance analysis (PBA) is a method for reconstructing dynamics from static-snapshots of single-cell gene expression (ref 1). 
+#(
+The basic inputs to PBA are:
 
 1. A sample of single-cell gene expression profiles
 2. A vector (_R_) with estimates of the relative rates of proliferation and loss at each sampled gene expression state
 3. A scalar diffusion constant (_D_) that reflects the level of stochasticity in the dynamics*
 
-# (Under mild assumptions, there is a unique dynamical system that could have produced these data in steady-state. PBA uncovers the dynamical system by applying the law of population balance, which simply states that the flux of cells into and out of a small region of gene expression space must balance. More specifically, PBA models gene expression dynamics as a diffusion-drift process with diffusion rate (D) and inhomogenous boundary conditions (_R_). From the observed cell density (_c_), PBA calculates the unique potential field (_V_) satisfying the steady-state diffusion-drift equation:)
+Under mild assumptions, there is a unique dynamical system that could have produced these data in steady-state. PBA uncovers the dynamical system by applying the law of population balance, which simply states that the flux of cells into and out of a small region of gene expression space must balance. More specifically, PBA models gene expression dynamics as a diffusion-drift process with diffusion rate (D) and inhomogenous boundary conditions (_R_). From the observed cell density (_c_), PBA calculates the unique potential field (_V_) satisfying the steady-state diffusion-drift equation:
 
-# (
+
 <p align="center">
 <img src="https://github.com/AllonKleinLab/PBA/blob/master/aux_files/diff_drift_eq.png" width=270 />
 </p>
-)
 
-# (
 The final outputs of PBA are:
 
 1. A potential landscape _V_ (encoded by the values it takes at each sampled gene expession state)
