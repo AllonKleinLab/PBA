@@ -7,12 +7,7 @@ Population balance analysis (PBA) relates the observed states of a system to its
 <img src="https://github.com/AllonKleinLab/PBA/blob/master/aux_files/diff_drift_eq.png" width=170 />
 </p>
 
-<<<<<<< HEAD
-where _c_ is the density of cells in gene expression space, and _R_ is the net rate of cell division minus cell loss. In practice, this equation cannot be numerically solved, but for a set of observed transcriptional states _x<sub>i</sub>_ sampled from _c_, PBA calculates an approximate solution for _V_. We prove mathematically in (ref 1) that this approximation converges in the high sampling limit. 
-=======
 where _c_ is the density of cells in gene expression space, and _R_ is the net rate of cell division minus cell loss. In practice, this equation cannot be numerically solved, but for a set of observed transcriptional states _x<ub>i</sub>_ sampled from _c_, PBA calculates an approximate solution for _V_. We prove mathematically in (ref 1) that this approximation converges in the high sampling limit. 
->>>>>>> 8b1d78a884f0673bcc86e5ece93d641d8084c22d
-
 
 ## Usage ##
 
@@ -41,11 +36,13 @@ PBA applies a sequence of calculations (see below). Each one can be run as a sep
         Usage: python PBA_pipeline.py -X <path_to_expression_matrix>            (required if no edge list is supplied; .csv or .npy)
                                       -E <minimum_mean expression>              (default = 0.05; used to filter genes for knn graph)
                                       -V <minimum_CV>                           (default = 2; used to filter genes for knn graph)
+                                      -N <Normalize>                            (default = False; used to normalize expression data for knn graph)
                                       -p <PCA dimension>                        (default = 50; used to compute distance matrix for knn graph)
                                       -k <number of nearest neighbors>          (default = 10; used to compute edge list for knn graph)
                                       -e <path_to_edge_list>                    (required if no expression matrix is supplied)
                                       -R <path_to_sources_sinks_vector>         (required; .npy or .csv)
                                       -S <path_to_lineage_specific_sink_matrix> (optional, needed to compute fate probabilities; .csv or .npy)
+                                      -D                                        (default = 1.0; controls the level of stochasticity in the model)
 
 
 Alternatively, it is possible to run each step separately, as follows: 
@@ -59,6 +56,7 @@ Alternatively, it is possible to run each step separately, as follows:
         Usage: python compute_knn_graph.py -X <path_to_expression_matrix>   (required; .csv or .npy)
                                            -E <minimum_mean expression>     (default = 0.05; used to filter genes)
                                            -V <minimum_CV>                  (default = 2; used to filter genes)
+                                           -N <Normalize>                            (default = False; used to normalize expression data for knn graph)
                                            -p <PCA dimension>               (default = 50; used to compute distance matrix)
                                            -k <number of nearest neighbors> (default = 10; used to compute edge list)
 
@@ -88,7 +86,7 @@ Alternatively, it is possible to run each step separately, as follows:
         Usage: python compute_fate_probabilities.py -S <path_to_lineage_specific_sink_matrix> (required; .csv or .npy)
                                                     -V <path_to_potential_vector>             (default: "V.npy" in same directory as S; .npy or .csv)
                                                     -e <path_to_edge_list>                    (default: "edge_list.csv" in same directory as S)
-                                                    -D <diffusion_constant>                   (default: 1.0)
+                                                    -D <diffusion_constant>                   (default = 1.0; controls the level of stochasticity in the model)\n
 
 
 ## Testing ##
