@@ -7,7 +7,11 @@ Population balance analysis (PBA) relates the observed states of a system to its
 <img src="https://github.com/AllonKleinLab/PBA/blob/master/aux_files/diff_drift_eq.png" width=170 />
 </p>
 
+<<<<<<< HEAD
+where _c_ is the density of cells in gene expression space, and _R_ is the net rate of cell division minus cell loss. In practice, this equation cannot be numerically solved, but for a set of observed transcriptional states _x<sub>i</sub>_ sampled from _c_, PBA calculates an approximate solution for _V_. We prove mathematically in (ref 1) that this approximation converges in the high sampling limit. 
+=======
 where _c_ is the density of cells in gene expression space, and _R_ is the net rate of cell division minus cell loss. In practice, this equation cannot be numerically solved, but for a set of observed transcriptional states _x<ub>i</sub>_ sampled from _c_, PBA calculates an approximate solution for _V_. We prove mathematically in (ref 1) that this approximation converges in the high sampling limit. 
+>>>>>>> 8b1d78a884f0673bcc86e5ece93d641d8084c22d
 
 
 ## Usage ##
@@ -18,6 +22,7 @@ where _c_ is the density of cells in gene expression space, and _R_ is the net r
 2. **Edge list** [alternative to 1.]. Instead of an expression matrix (input 1.), users can upload a list of edges representing a (knn) graph over sampled gene expession states. The file should contain an edge in the format "_i,j_" on each line (0-based numbering). Users can generate, visualize and then export knn graph edge lists in our companion software _SPRING_ (ref 2), available as a [webserver](https://kleintools.hms.harvard.edu/tools/spring.html) or a [standalone program](https://github.com/AllonKleinLab/SPRING/). 
 3. **Source/sink vector**. This (.npy or .csv) file should contain a vector of source/sink terms representing the relative rates of proliferation and loss at each sampled gene expession state. Note that uniformly changing R by a scalar factor _f_ is equivalent to changing the diffusion rate (level of stochasticity) by _1/f_.
 4. **Lineage-specific sink matrix** [optional]. If provided, this matrix can be used to define terminal lineages and compute the fate probabilities of sampled gene expession state. This (.npy or .csv) file should contain a matrix with one column for each lineage and one row for each cell. The _i,j_ entry represents the flux of cells from gene expression state _i_ into lineage _j_. 
+5. **Diffusion constant (_D_)** [defaut: 1.0]. This parameter controls the level of stochasticity in the model. It is redundant: setting _D = x_ is equivalent to multiplying inputs 3., 4. by the factor _1/x_.
 
 We provide example datasets from (ref 1) in `example_datasets/`. 
 
@@ -83,6 +88,7 @@ Alternatively, it is possible to run each step separately, as follows:
         Usage: python compute_fate_probabilities.py -S <path_to_lineage_specific_sink_matrix> (required; .csv or .npy)
                                                     -V <path_to_potential_vector>             (default: "V.npy" in same directory as S; .npy or .csv)
                                                     -e <path_to_edge_list>                    (default: "edge_list.csv" in same directory as S)
+                                                    -D <diffusion_constant>                   (default: 1.0)
 
 
 ## Testing ##

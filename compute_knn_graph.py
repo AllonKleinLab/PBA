@@ -1,12 +1,13 @@
-import numpy as np, sys, os
+import numpy as np, sys, os, getopt
 #========================================================================================#
 def printHelp():
 	print '''Argument flags:	
 	-X <path_to_expression_matrix>   (required; .npy or .csv)
-	-E <minimum_mean_expression>     (default = 0.05; used to filter genes)
-	-V <minimum_CV>                  (default = 2; used to filter genes)
+	-E <minimum_mean_expression>     (default = -10000; used to filter genes)
+	-V <minimum_CV>                  (default = 0; used to filter genes)
 	-p <PCA dimension>               (default = 50; used to compute distance matrix)
-	-k <number of nearest neighbors> (default = 10; used to compute edge list)'''
+	-k <number of nearest neighbors> (default = 10; used to compute edge list)\n
+	-N <Normalize>                   (default: False)'''
 
 def get_distance_matrix(M):
 	D = np.zeros((M.shape[0],M.shape[0]))
@@ -26,7 +27,7 @@ def Zscore(E):
 
 def filter_genes(E, Ecutoff, Vcutoff):
 	mean_filter = np.mean(E,axis=0)> Ecutoff
-	var_filter = np.var(E,axis=0) / (np.mean(E,axis=0)+.0001) > Vcutoff
+	var_filter = np.var(E,axis=0) / (np.abs(np.mean(E,axis=0)+.0001)) > Vcutoff
 	gene_filter = np.nonzero(np.all([mean_filter,var_filter],axis=0))[0]
 	return E[:,gene_filter], gene_filter
 	
@@ -64,17 +65,18 @@ def save_edge_list(edges,path):
 #========================================================================================#
 def main(argv):
 	try:
-		opts,args = getopt.getopt(argv, 'X:E:V:p:k:')
+		opts,args = getopt.getopt(argv, 'X:E:V:p:k:N:')
 	except:
-		print 'Inputs formatted incorrectly'
-		printHelp()
+		print '\nInputs formatted incorrectly'
+		printHelp(); sys.exit(2)
 
 	#get the arguments and turn them into variables
 	path_to_expression_matrix = None
-	minimum_mean_expression = 0.05
-	minimum_CV = 2
+	minimum_mean_expression = -10000
+	minimum_CV = 0
 	k = 10
-	p = 50	
+	p = 50
+	normalize = False	
 	
 	for o,a in opts:
 		if o == '-X': path_to_expression_matrix = a
@@ -82,28 +84,29 @@ def main(argv):
 		if o == '-V': minimum_CV = float(a)
 		if o == '-p': p = int(a)
 		if o == '-k': k = int(a)
+		if o == '-N': normalize = (a == 'True')
 
 	#====================================================================================#
 	
 	# load input data
-	print 'Loading expression data
-	if path_to_expression_matrix == None: print 'You must input an expression matrix using the -X flag'; sys.exit(2)
-	if not os.path.exists(path_to_expression_matrix): print 'The file '+path_to_expression_matrix+' does not exist'; sys.exit(2)
+	print 'Loading expression data'
+	if path_to_expression_matrix == None: print 'Error: You must input an expression matrix using the -X flag'; sys.exit(2)
+	if not os.path.exists(path_to_expression_matrix): print 'Error: The file '+path_to_expression_matrix+' does not exist'; sys.exit(2)
 	if   '.csv' in path_to_expression_matrix: E = np.loadtxt(path_to_expression_matrix, delimiter=',')
 	elif '.npy' in path_to_expression_matrix: E = np.load(path_to_expression_matrix)
-	else: print 'The expression file must end in ".npy" or ".csv"'; sys.exit(2)
+	else: print 'Error: The expression file must end in ".npy" or ".csv"'; sys.exit(2)
 	
 	# Filtering and normalization
 	print 'Filtering and normalization'
-	EE = row_normalize(E)
+	if normalize: EE = row_normalize(E)
+	else: EE = E
 	EE,gene_filter = filter_genes(EE, minimum_mean_expression, minimum_CV)
-	if np.sum(gene_filter) == 0: print 'No genes survived filtering, consider lowering the minimum mean expression (-E) or minimum CV (-V)'
-	EZ = Zscore(EE)
+	if np.sum(gene_filter) == 0: print 'Error: No genes survived filtering, consider lowering the minimum mean expression (-E) or minimum CV (-V)'
 	
 	# PCA and distance matrix
 	print 'Performing PCA'
-	if p < EZ.shape[1]: Epca = get_PCA(EZ,p)
-	else: Epca = EZ
+	if p < EE.shape[1]: Epca = get_PCA(EE,p)
+	else: Epca = EE
 	
 	print 'Computing distance matrix'
 	D = get_distance_matrix(Epca)
