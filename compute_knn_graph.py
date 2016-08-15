@@ -7,7 +7,7 @@ def printHelp():
 	-V <minimum_CV>                  (default = 0; used to filter genes)
 	-p <PCA dimension>               (default = 50; used to compute distance matrix)
 	-k <number of nearest neighbors> (default = 10; used to compute edge list)\n
-	-N <Normalize>                   (default: False)'''
+	-N <Normalize>                   (default = False; used to normalize expression data for knn graph)'''
 
 def get_distance_matrix(M):
 	D = np.zeros((M.shape[0],M.shape[0]))

@@ -5,7 +5,7 @@ def printHelp():
     -S <path_to_lineage_specific_sink_matrix> (required; .csv or .npy)
     -V <path_to_potential_vector>             (default: "V.npy" in same directory as S; .npy or .csv)
     -e <path_to_edge_list>                    (default: "edge_list.csv" in same directory as S)
-    -D <diffusion_constant>                   (default: 1.0)\n'''
+    -D <diffusion_constant>                   (default = 1.0; controls the level of stochasticity in the model)\n\n'''
 
 def load_edge_list(path):
 	edge_text = open(path).read()

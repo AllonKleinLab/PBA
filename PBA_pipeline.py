@@ -5,13 +5,13 @@ def printHelp():
 	-X <path_to_expression_matrix>            (required; .npy or .csv)
 	-E <minimum_mean_expression>              (default = -10000; used to filter genes)
 	-V <minimum_CV>                           (default = 0; used to filter genes)
-	-N <Normalize>                            (default: False)
+	-N <Normalize>                            (default = False; used to normalize expression data for knn graph)
 	-p <PCA dimension>                        (default = 50; used to compute distance matrix)
 	-k <number of nearest neighbors>          (default = 10; used to compute edge list)
     -e <path_to_edge_list>                    (required if no expression matrix is supplied)
     -R <path_to_sources_sinks_vector>         (required; .npy or .csv)
     -S <path_to_lineage_specific_sink_matrix> (optional, needed to compute fate probabilities; .csv or .npy)
-    -D <diffusion_constant>                   (default: 1.0)\n'''
+    -D <diffusion_constant>                   (default = 1.0; controls the level of stochasticity in the model)\n'''
 
 
 #========================================================================================#
