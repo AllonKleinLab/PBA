@@ -95,11 +95,11 @@ The example_datasets contain
 
 1. To reproduce the PBA results used for Figure 1 of (ref 1), run the following command
  
-   `blah blah`
+   `python PBA_pipeline.py -X example_datasets/bifurcation/X.npy -R example_datasets/bifurcation/R.npy -S example_datasets/bifurcation/S.npy`
 
 2. To reproduce the PBA results used for Figures 2-4 of (ref 1), run the following command
 
- `blah blah`
+ `python PBA_pipeline.py -X example_datasets/hematopoiesis/X.npy -R example_datasets/hematopoiesis/R.npy -S example_datasets/hematopoiesis/S.npy`
  
 To visualize the results, run `python view_testing_results.py`
 
