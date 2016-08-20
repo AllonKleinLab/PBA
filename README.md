@@ -47,6 +47,8 @@ PBA applies a sequence of calculations (see below). Each one can be run as a sep
 
 Alternatively, it is possible to run each step separately, as follows: 
 
+_(Note: Some of the following functions differ from the pseudocode of (ref 1) in that they take as input an edge list as opposed to an expression matrix. This configuration improves computational efficiency and allows generation of edge lists from outside software.)_ 
+
 1. **Compute a knn graph from an expression matrix**. Use `compute_knn_graph.py`. This script, together with graph visualizaion tools, is also available in our companion software [_SPRING_ (ref 2)](https://github.com/AllonKleinLab/SPRING/tree/master)
 
 
@@ -56,7 +58,7 @@ Alternatively, it is possible to run each step separately, as follows:
         Usage: python compute_knn_graph.py -X <path_to_expression_matrix>   (required; .csv or .npy)
                                            -E <minimum_mean expression>     (default = 0.05; used to filter genes)
                                            -V <minimum_CV>                  (default = 2; used to filter genes)
-                                           -N <Normalize>                            (default = False; used to normalize expression data for knn graph)
+                                           -N <Normalize>                   (default = False; used to normalize expression data for knn graph)
                                            -p <PCA dimension>               (default = 50; used to compute distance matrix)
                                            -k <number of nearest neighbors> (default = 10; used to compute edge list)
 
@@ -85,6 +87,16 @@ Alternatively, it is possible to run each step separately, as follows:
 
         Usage: python compute_fate_probabilities.py -S <path_to_lineage_specific_sink_matrix> (required; .csv or .npy)
                                                     -V <path_to_potential_vector>             (default: "V.npy" in same directory as S; .npy or .csv)
+                                                    -e <path_to_edge_list>                    (default: "edge_list.csv" in same directory as S)
+                                                    -D <diffusion_constant>                   (default = 1.0; controls the level of stochasticity in the model)\n
+
+5. **Compute mean first passage times**. Use `compute_mean_first_passage_times.py`. 
+
+
+        Inputs: The potential function V and a knn graph edge list (see Input 2. above)
+        Output: Fate probability matrix where rows are cells and columns are fates (an array called B.npy saved to the same diectory as the potential V)
+
+        Usage: python compute_fate_probabilities.py -V <path_to_potential_vector>             (default: "V.npy" in same directory as S; .npy or .csv)
                                                     -e <path_to_edge_list>                    (default: "edge_list.csv" in same directory as S)
                                                     -D <diffusion_constant>                   (default = 1.0; controls the level of stochasticity in the model)\n
 

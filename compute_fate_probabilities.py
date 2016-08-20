@@ -83,16 +83,16 @@ def main(argv):
 	A = make_adjacency_matrix(edges)
 	V = V / D
 	Vx,Vy = np.meshgrid(V,V)
-	T = A * np.exp(np.minimum(Vy - Vx, 400))
-	bigT = np.hstack((T,S))
-	bigT = np.vstack((bigT,np.hstack((np.zeros((S.shape[1],T.shape[1])),np.identity(S.shape[1])))))
-	bigT = row_sum_normalize(bigT)
+	P = A * np.exp(np.minimum(Vy - Vx, 400))
+	bigP = np.hstack((T,S))
+	bigP = np.vstack((bigP,np.hstack((np.zeros((S.shape[1],P.shape[1])),np.identity(S.shape[1])))))
+	bigP = row_sum_normalize(bigP)
 
 	
 	# compute fundamental matrix
 	print 'Computing fundamental matrix'
-	Q  = bigT[:T.shape[0],:T.shape[0]]
-	RR = bigT[:T.shape[0],T.shape[0]:]
+	Q  = bigP[:P.shape[0],:P.shape[0]]
+	RR = bigP[:P.shape[0],P.shape[0]:]
 	B = np.linalg.solve(np.identity(Q.shape[0])-Q,RR)
 	outpath = '/'.join(path_to_S.split('/')[:-1] + ['B.npy'])
 	np.save(outpath,B)
