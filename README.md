@@ -94,10 +94,10 @@ _(Note: Some of the following functions differ from the pseudocode of (ref 1) in
 
 
         Inputs: The potential function V and a knn graph edge list (see Input 2. above)
-        Output: Fate probability matrix where rows are cells and columns are fates (an array called B.npy saved to the same diectory as the potential V)
+        Output: Mean first passage time matrix T where T<sub>i,j</sub> = MFPT(i -> j) (an array called T.npy saved to the same diectory as the potential V)
 
-        Usage: python compute_fate_probabilities.py -V <path_to_potential_vector>             (default: "V.npy" in same directory as S; .npy or .csv)
-                                                    -e <path_to_edge_list>                    (default: "edge_list.csv" in same directory as S)
+        Usage: python compute_fate_probabilities.py -V <path_to_potential_vector>             (required; .npy or .csv)
+                                                    -e <path_to_edge_list>                    (default: "edge_list.csv" in same directory as V)
                                                     -D <diffusion_constant>                   (default = 1.0; controls the level of stochasticity in the model)\n
 
 
