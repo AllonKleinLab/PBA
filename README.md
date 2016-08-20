@@ -1,6 +1,8 @@
 Population balance analysis
 =======================
 
+test
+
 Population balance analysis (PBA) relates the observed states of a system to its steady-state dynamics by applying the law of population balance (ref 1). The dynamics are represented as a potential field, _V_, over the space of gene expression. Knowledge of V allows one to calculate possible dynamical trajectories and their properties. PBA requires enough cells to be sampled to approximate a continuum of gene expression states; and some prior estimates of the relative rates of proliferation and loss in different gene expression states (_R_). The potential _V_ is the solution to the partial differential equation,
 
 <p align="center">
