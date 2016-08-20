@@ -2,10 +2,10 @@ import numpy as np, sys, os, getopt
 #========================================================================================#
 def printHelp():
 	print '''Argument flags:	
-    -S <path_to_lineage_specific_sink_matrix> (required; .csv or .npy)
-    -V <path_to_potential_vector>             (default: "V.npy" in same directory as S; .npy or .csv)
-    -e <path_to_edge_list>                    (default: "edge_list.csv" in same directory as S)
-    -D <diffusion_constant>                   (default = 1.0; controls the level of stochasticity in the model)\n\n'''
+    -R <path_to_sources_sinks_vector>    (required; .npy .csv)
+    -V <path_to_potential_vector>        (default; "V.npy" in same directory as R)
+    -e <path_to_edge_list>               (default: "edge_list.csv" in same directory as R)
+    -D <diffusion_constant>              (default = 1.0; controls the level of stochasticity in the model)\n\n'''
 
 def load_edge_list(path):
 	edge_text = open(path).read()
@@ -37,33 +37,33 @@ def row_sum_normalize(A):
 #========================================================================================#
 def main(argv):
 	try:
-		opts,args = getopt.getopt(argv, 'S:V:e:D:')
+		opts,args = getopt.getopt(argv, 'R:V:e:D:')
 	except:
 		print '\nInputs formatted incorrectly'
 		printHelp(); sys.exit(2)
 
 	#get the arguments and turn them into variables
-	path_to_S = None
+	path_to_R = None
 	path_to_V = None
 	path_to_edge_list = None
 	D = 1.0
 	
 	for o,a in opts:
-		if o == '-S': path_to_S = a
+		if o == '-R': path_to_R = a
 		if o == '-V': path_to_V = a
 		if o == '-e': path_to_edge_list = a
 		if o == '-D': D = float(a)
 
 	#====================================================================================#
 
-	if path_to_S == None: print 'Error: You must input a lineage-specific sink matrix using the -S flag'; sys.exit(2)
-	if not os.path.exists(path_to_S):  print 'Error: The file '+path_to_S+' does not exist'; sys.exit(2)
-	if   '.csv' in path_to_S: S = np.loadtxt(path_to_S, delimiter=',')
-	elif '.npy' in path_to_S: S = np.load(path_to_S)
-	else: print 'Error: The lineage-specific sink matrix S must end in ".npy" or ".csv"'; sys.exit(2)
+	if path_to_R == None: print 'Error: You must input a source/sink vector using the -R flag'; sys.exit(2)
+	if not os.path.exists(path_to_R):  print 'Error: The file '+path_to_R+' does not exist'; sys.exit(2)
+	if   '.csv' in path_to_R: R = np.loadtxt(path_to_R, delimiter=',')
+	elif '.npy' in path_to_R: R = np.load(path_to_R)
+	else: print 'Error: The source/sink vector R must end in ".npy" or ".csv"'; sys.exit(2)
 	
 	if path_to_V == None:
-		tmp_path_to_V = '/'.join(path_to_S.split('/')[:-1] + ['V.npy'])
+		tmp_path_to_V = '/'.join(path_to_R.split('/')[:-1] + ['V.npy'])
 		if os.path.exists(tmp_path_to_V): V = np.load(tmp_path_to_V)
 		else: print 'Error: You must create the file '+tmp_path_to_V+'. Use "compute_potential.py"'; sys.exit(2)
 	else:
@@ -71,7 +71,7 @@ def main(argv):
 		else: V = np.load(path_to_V)
 
 	if path_to_edge_list == None:
-		tmp_path_to_edge_list = '/'.join(path_to_S.split('/')[:-1] + ['edge_list.csv'])
+		tmp_path_to_edge_list = '/'.join(path_to_R.split('/')[:-1] + ['edge_list.csv'])
 		if os.path.exists(tmp_path_to_edge_list): edges = load_edge_list(tmp_path_to_edge_list)
 		else: print 'Error: You must create the file '+tmp_path_to_edge_list+'. Use "compute_knn_graph.py"'; sys.exit(2)
 	else:
@@ -79,23 +79,33 @@ def main(argv):
 		else: edges = load_edge_list(path_to_edge_list)
 		
 	# Make Markov chain transition matrix
-	print 'Making Markov chain transition matrix'	
+	T = np.zeros((len(R),len(R)))
 	A = make_adjacency_matrix(edges)
 	V = V / D
 	Vx,Vy = np.meshgrid(V,V)
 	P = A * np.exp(np.minimum(Vy - Vx, 400))
-	bigP = np.hstack((P,S))
-	bigP = np.vstack((bigP,np.hstack((np.zeros((S.shape[1],P.shape[1])),np.identity(S.shape[1])))))
-	bigP = row_sum_normalize(bigP)
+		
+	for i in range(len(R)):
+		print 'Calculating MFPTs from all nodes to node',i	
+		bigP = np.zeros((len(R)+1,len(R)+1))
+		bigP[:len(R),:len(R)] = P
+		bigP[:len(R),-1] = R
+		new_index = range(A.shape[0]+1)
+		new_index.remove(i)
+		new_index.append(i)
+		new_index = np.array(new_index)
+		bigP = bigP[new_index,:][:,new_index]
+		bigP = row_sum_normalize(bigP)
 
-	
-	# compute fundamental matrix
-	print 'Computing fundamental matrix'
-	Q  = bigP[:P.shape[0],:P.shape[0]]
-	RR = bigP[:P.shape[0],P.shape[0]:]
-	B = np.linalg.solve(np.identity(Q.shape[0])-Q,RR)
-	outpath = '/'.join(path_to_S.split('/')[:-1] + ['B.npy'])
-	np.save(outpath,B)
+		Q  = bigP[:len(R)-2,:len(R)-2]
+		RR = bigP[:len(R)-2,len(R)-2:]
+		N = np.linalg.inv(np.identity(Q.shape[0])-Q)
+		B = np.dot(N,RR)
+		d = B[:,-1]
+		T[:,i] = np.dot(np.dot(1./d,N),d)
+		
+	outpath = '/'.join(path_to_R.split('/')[:-1] + ['T.npy'])
+	np.save(outpath,T)
 
 if __name__ == '__main__':
 	main(sys.argv[1:])
