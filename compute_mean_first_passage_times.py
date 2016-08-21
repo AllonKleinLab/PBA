@@ -84,25 +84,28 @@ def main(argv):
 	V = V / D
 	Vx,Vy = np.meshgrid(V,V)
 	P = A * np.exp(np.minimum(Vy - Vx, 400))
-		
+
 	for i in range(len(R)):
 		print 'Calculating MFPTs from all nodes to node',i	
 		bigP = np.zeros((len(R)+1,len(R)+1))
 		bigP[:len(R),:len(R)] = P
-		bigP[:len(R),-1] = R
+		bigP[:len(R),-1] = -np.minimum(R,0)
+		bigP[-1,-1] = 1
 		new_index = range(A.shape[0]+1)
 		new_index.remove(i)
 		new_index.append(i)
 		new_index = np.array(new_index)
 		bigP = bigP[new_index,:][:,new_index]
+		bigP[-1,:] = 0
+		bigP[-1,-1] = 1
 		bigP = row_sum_normalize(bigP)
-
-		Q  = bigP[:len(R)-2,:len(R)-2]
-		RR = bigP[:len(R)-2,len(R)-2:]
+		Q  = bigP[:len(R)-1,:len(R)-1]
+		RR = bigP[:len(R)-1,len(R)-1:]
 		N = np.linalg.inv(np.identity(Q.shape[0])-Q)
 		B = np.dot(N,RR)
-		d = B[:,-1]
-		T[:,i] = np.dot(np.dot(1./d,N),d)
+		d = np.diag(B[:,-1])
+		dinv = np.diag(1./B[:,-1])
+		T[np.arange(len(R))!=i,i] = np.dot(np.dot(np.dot(dinv,N),d), np.ones(d.shape[0]))
 		
 	outpath = '/'.join(path_to_R.split('/')[:-1] + ['T.npy'])
 	np.save(outpath,T)

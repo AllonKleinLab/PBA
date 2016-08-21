@@ -38,13 +38,18 @@ else:
 	xx = coords[:,0]; yy = coords[:,1]
 	V = np.load('example_datasets/bifurcation/V.npy')
 	B = np.load('example_datasets/bifurcation/B.npy')
+	T = np.load('example_datasets/bifurcation/T.npy')
+	R = np.load('example_datasets/bifurcation/R.npy')
+	tt = np.mean(T[R>0,:],axis=0)
 	c = color_by_fate(B)
-	fig,axs = plt.subplots(1,2)
+	fig,axs = plt.subplots(1,3)
 	axs[0].scatter(xx,yy,c=V,edgecolor='',s=60)
 	axs[0].set_title('Potnetial (V)')
 	axs[1].scatter(xx,yy,c=c,edgecolor='',s=60)
 	axs[1].set_title('Fate probabilities (B.npy)')
-	for i in range(2):
+	axs[2].scatter(xx,yy,c=tt,edgecolor='',s=60, cmap=plt.cm.jet)
+	axs[2].set_title('Time since source (from T.npy)')
+	for i in range(3):
 		axs[i].set_xticks([])
 		axs[i].set_yticks([])
 	plt.suptitle('Testing results for example_datasets/bifurcation')

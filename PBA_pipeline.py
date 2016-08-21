@@ -2,7 +2,7 @@ import numpy as np, sys, os, getopt
 #========================================================================================#
 def printHelp():
 	print '''Argument flags:	
-	-X <path_to_expression_matrix>            (required; .npy or .csv)
+	-X <path_to_expression_matrix>            (required if no edge list is supplied; .npy or .csv)
 	-E <minimum_mean_expression>              (default = -10000; used to filter genes)
 	-V <minimum_CV>                           (default = 0; used to filter genes)
 	-N <Normalize>                            (default = False; used to normalize expression data for knn graph)
@@ -50,14 +50,14 @@ def main(argv):
 	
 	for path in [path_to_expression_matrix, path_to_edge_list, path_to_R, path_to_S]:
 		if path != None and not os.path.exists(path): print 'Error: The file '+path+' does not exist'; sys.exit(2)
-		
+	
 	if path_to_expression_matrix == None and path_to_edge_list == None: 
 		print 'Error: You must input either an expression matrix (-X) or knn edge list (-e)'; sys.exit(2)
 	elif path_to_edge_list == None:
 		print '\n## Running compute_knn_graph.py'
 		os.system('python compute_knn_graph.py -E '+repr(minimum_mean_expression)+' -V '+repr(minimum_CV)+' -k '+repr(k)+' -p '+repr(p)+' -X '+ path_to_expression_matrix + ' -N '+repr(normalize))
 		path_to_edge_list = '/'.join(path_to_expression_matrix.split('/')[:-1] + ['edge_list.csv'])
-	
+		
 	print '\n## Running compute_Linv.py'
 	os.system('python compute_Linv.py -e '+path_to_edge_list)
 	
@@ -66,6 +66,19 @@ def main(argv):
 	
 	print '\n## Running compute_fate_probabilities.py'
 	os.system('python compute_fate_probabilities.py  -S '+path_to_S+' -e '+path_to_edge_list+' -D '+repr(D))
+
+	N_cells = len(np.load(path_to_R))
+	command = 'python compute_mean_first_passage_times.py  -R '+path_to_R+' -e '+path_to_edge_list+' -D '+repr(D)
+
+	if N_cells > 1000: 	
+		print 'WARNING: the script "compute_mean_first_passage_times.py" will be vey slow \
+for your dataset of '+repr(N_cells)+' cells. To run this script, use the following:\n'
+		print command,'\n'
+
+	else:
+		print '\n## Running compute_mean_first_passage_times.py'
+		os.system(command)
+
 	
 if __name__ == '__main__':
 	main(sys.argv[1:])

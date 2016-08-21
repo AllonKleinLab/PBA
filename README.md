@@ -103,7 +103,12 @@ _(Note: Some of the following functions differ from the pseudocode of (ref 1) in
 
 ## Testing ##
 
-The example_datasets contain
+
+0. Unzip the example_datasets folder (can be done in terminal with the following command)
+
+
+
+		unzip example_datasets.zip
 
 1. To reproduce the PBA results used for Figure 1 of (ref 1), run the following command
  
@@ -115,7 +120,7 @@ The example_datasets contain
 
 
 
-        python PBA_pipeline.py -X example_datasets/hematopoiesis/X.npy -R example_datasets/hematopoiesis/R.npy -S   example_datasets/hematopoiesis/S.npy` 
+        python PBA_pipeline.py -X example_datasets/hematopoiesis/X.npy -R example_datasets/hematopoiesis/R.npy -S   example_datasets/hematopoiesis/S.npy
  
 To visualize the results, run `python view_testing_results.py`
 
