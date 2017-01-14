@@ -66,8 +66,10 @@ def main(argv):
 	
 	print '\n## Running compute_fate_probabilities.py'
 	os.system('python compute_fate_probabilities.py  -S '+path_to_S+' -e '+path_to_edge_list+' -D '+repr(D))
-
-	N_cells = len(np.load(path_to_R))
+	
+	if   '.csv' in path_to_R: R = np.loadtxt(path_to_R, delimiter=',')
+	elif '.npy' in path_to_R: R = np.load(path_to_R)
+	N_cells = len(R)
 	command = 'python compute_mean_first_passage_times.py  -R '+path_to_R+' -e '+path_to_edge_list+' -D '+repr(D)
 
 	if N_cells > 1000: 	
