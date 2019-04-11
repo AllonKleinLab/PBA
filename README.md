@@ -130,7 +130,7 @@ Contact calebsw@gmail.com
 
 ## References ##
 
-Ref 1 (in submission)
+Ref 1 (https://www.pnas.org/content/115/10/E2467)
 
-Ref 2 (in submission)
+Ref 2 (https://www.nature.com/articles/nature25741)
 
